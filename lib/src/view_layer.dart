@@ -56,7 +56,7 @@ typedef ViewBuilder = Widget Function(BuildContext context);
 /// ```
 ///
 /// You can optionally set globally new default values for breakpoints. To do so, just check on [FlutterCleanArchitecture.setDefaultViewBreakpoints]
-abstract class ResponsiveViewState<Page extends View, Con extends Controller>
+abstract class ResponsiveViewState<Page extends ViewLayer, Con extends Controller>
     extends ViewState<Page, Con> {
   ResponsiveViewState(Con controller) : super(controller);
 
@@ -126,7 +126,7 @@ abstract class ResponsiveViewState<Page extends View, Con extends Controller>
 ///     }
 ///
 /// ```
-abstract class ViewState<Page extends View, Con extends Controller>
+abstract class ViewState<Page extends ViewLayer, Con extends Controller>
     extends State<Page> {
   final GlobalKey<State<StatefulWidget>> globalKey =
       GlobalKey<State<StatefulWidget>>();
@@ -134,7 +134,7 @@ abstract class ViewState<Page extends View, Con extends Controller>
   late Logger _logger;
   late ViewBuilder builder;
 
-  /// Implement the [Widget] you want to be displayed on [View]
+  /// Implement the [Widget] you want to be displayed on [ViewLayer]
   Widget get view;
 
   ViewState(this._controller) {
@@ -196,11 +196,11 @@ abstract class ViewState<Page extends View, Con extends Controller>
   }
 }
 
-/// The [View] represents a [StatefulWidget]. The [View] is typically a page or screen in
-/// the application. However, a [View] can be any [StatefulWidget]. The [View] must have a
+/// The [ViewLayer] represents a [StatefulWidget]. The [ViewLayer] is typically a page or screen in
+/// the application. However, a [ViewLayer] can be any [StatefulWidget]. The [ViewLayer] must have a
 /// [State], and that [State] should be of type [ViewState<MyView, MyController>].
 ///
-/// If a [RouteObserver] is given to the [View], it is used to register its [Controller] as
+/// If a [RouteObserver] is given to the [ViewLayer], it is used to register its [Controller] as
 /// a subscriber, which provides the ability to listen to push and pop route events.
 /// ```dart
 ///   class CounterPage extends View {
@@ -212,10 +212,10 @@ abstract class ViewState<Page extends View, Con extends Controller>
 ///
 /// ```
 ///
-abstract class View extends StatefulWidget {
+abstract class ViewLayer extends StatefulWidget {
   @override
   final Key? key;
   final RouteObserver? routeObserver;
 
-  const View({this.routeObserver, this.key}) : super(key: key);
+  const ViewLayer({this.routeObserver, this.key}) : super(key: key);
 }
